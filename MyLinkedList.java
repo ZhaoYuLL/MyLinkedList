@@ -47,26 +47,22 @@ public class MyLinkedList{
    current.setNext(temp);
    size +=1;
  }
+
+
+
  public String get(int index){
-   try{
-     if(index < 0 || index > size()){
+  if(index < 0 || index > size()){
        throw new IndexOutOfBoundsException("Index is out of bounds!");
-     }
-   }catch(NullPointerException e){
-     throw new IndexOutOfBoundsException("Index is out of bounds!");
-   }
-   return "a";
+  }
+
  }
+
  public String set(int index, String value){
-   try{
-     if(index < 0 || index > size()){
-       throw new IndexOutOfBoundsException("Index is out of bounds!");
-     }
-   }catch(NullPointerException e){
-     throw new IndexOutOfBoundsException("Index is out of bounds!");
-   }
-   return "a";
- }
+  if(index < 0 || index > size()){
+    throw new IndexOutOfBoundsException("Index is out of bounds!");
+  }
+
+}
  public String toString(){
    String output = "";
 
