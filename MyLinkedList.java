@@ -29,7 +29,7 @@ public class MyLinkedList{
 
  public void add(int index, String value){
    try{
-     if(index < 0 || index >= size()){
+     if(index < 0 || index > size()){
        throw new IndexOutOfBoundsException("Index is out of bounds!");
      }
    }catch(NullPointerException e){
