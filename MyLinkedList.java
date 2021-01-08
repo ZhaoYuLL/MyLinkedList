@@ -29,7 +29,7 @@ public class MyLinkedList{
 
  public void add(int index, String value){
    try{
-     if(index < 0 || index > size()){
+     if(index < 0 || index >= size()){
        throw new IndexOutOfBoundsException("Index is out of bounds!");
      }
    }catch(NullPointerException e){
@@ -48,36 +48,47 @@ public class MyLinkedList{
    size +=1;
  }
 
-
+ private Node move(int index){
+   if(index < 0 || index >= size()){
+        throw new IndexOutOfBoundsException("Index is out of bounds!");
+   }
+   Node current = start;
+   for(int i = 0; i <= index; i++){
+     current = current.getNext();
+   }
+   return current;
+ }
 
  public String get(int index){
-  if(index < 0 || index > size()){
+  if(index < 0 || index >= size()){
        throw new IndexOutOfBoundsException("Index is out of bounds!");
   }
-
+   Node current = move(index);
+   return current.getData();
  }
 
  public String set(int index, String value){
-  if(index < 0 || index > size()){
+  if(index < 0 || index >= size()){
     throw new IndexOutOfBoundsException("Index is out of bounds!");
   }
-
+  Node current = move(index);
+  String prev = current.getData();
+  current.setData(value);
+  return prev;
 }
  public String toString(){
    String output = "";
-
-		if (start != null) {
-			Node current = start.getNext();
-			while (current != null) {
-				output += current.getData().toString();
+	 if (start != null) {
+		Node current = start.getNext();
+		while (current != null) {
+		    output += current.getData().toString();
         if(current.getNext() != null){
           output += ", ";
         }
 				current = current.getNext();
-			}
-
 		}
-		return "[" + output + "]";
+	}
+  return "[" + output + "]";
  }; //shouldn't use get()- run time would be O(N^2)
  //Any helper method that returns a Node object MUST BE PRIVATE!
 }
