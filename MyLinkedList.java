@@ -28,24 +28,19 @@ public class MyLinkedList{
  }
 
  public void add(int index, String value){
-   try{
      if(index < 0 || index > size()){
-       throw new IndexOutOfBoundsException("Index is out of bounds!");
+       throw new IndexOutOfBoundsException("Index is out of bounds!" + index);
      }
-   }catch(NullPointerException e){
-     throw new IndexOutOfBoundsException("Index is out of bounds!");
-   }
-
-   Node temp = new Node(value);
-   Node current = start;
-   if(current != null){
+     Node temp = new Node(value);
+     Node current = start;
      for(int i = 0; i < index && current.getNext() != null; i++){
        current = current.getNext();
      }
-   }
-   temp.setNext(current.getNext());
-   current.setNext(temp);
-   size +=1;
+      temp.setNext(current.getNext());
+      current.setNext(temp);
+      temp.setPrev(current);
+      current.getNext().setPrev(temp);
+     size++;
  }
 
  private Node move(int index){
@@ -91,4 +86,23 @@ public class MyLinkedList{
   return "[" + output + "]";
  }; //shouldn't use get()- run time would be O(N^2)
  //Any helper method that returns a Node object MUST BE PRIVATE!
+
+ public String remove(int index){
+   if(index < 0 || index >= size()){
+     throw new IndexOutOfBoundsException("Index is out of bounds!");
+   }
+   return "a";
+ }
+ public void extend(MyLinkedList other){
+   //NO Loops, should be
+ }
+ public String toStringReversed(){
+   //start from end, getPrev instead of getNext
+   String output = "";
+   int i = 1;
+	 Node current = move(size()-i);
+   output += current.getPrev().getData().toString();
+
+   return "[" + output  + "]";
+ }
 }
