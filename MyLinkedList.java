@@ -12,43 +12,56 @@ public class MyLinkedList{
  }
 
  public boolean add(String value){
-   if(start == null){
-     start = new Node(value);
-     return true;
+   Node temp = new Node(value);
+   if(size() ==0){
+     start = temp;
+     end = temp;
+   }else{
+     end.setNext(temp);
+     temp.setPrev(end);
+     end = temp;
    }
-   Node newNode = new Node(value);
-   newNode.setNext(null);
-   Node current = start;
-   while(current.getNext() != null){
-     current = current.getNext();
-   }
-   current.setNext(newNode);
    size++;
    return true;
  }
 
- public void add(int index, String value){
-     if(index < 0 || index > size()){
-       throw new IndexOutOfBoundsException("Index is out of bounds!" + index);
-     }
-     Node temp = new Node(value);
-     Node current = start;
-     for(int i = 0; i < index && current.getNext() != null; i++){
-       current = current.getNext();
-     }
-      temp.setNext(current.getNext());
-      current.setNext(temp);
-      temp.setPrev(current);
-      current.getNext().setPrev(temp);
-     size++;
- }
+ public void add(int index, String value) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index " + index + " is not in range");
+        }
+
+        Node temp = new Node(value);
+        if (size == 0) {
+            start = temp;
+            end = temp;
+        } else if (index == size) {
+            end.setNext(temp);
+            temp.setPrev(end);
+            end = temp;
+        } else if (index == 0) {
+            start.setPrev(temp);
+            temp.setNext(start);
+            start = temp;
+        } else {
+            Node newPrev = move(index - 1);
+            Node newNext = move(index);
+            temp.setPrev(newPrev);
+            temp.setNext(newNext);
+            newPrev.setNext(temp);
+            newNext.setPrev(temp);
+        }
+
+        size ++;
+    }
 
  private Node move(int index){
    if(index < 0 || index >= size()){
         throw new IndexOutOfBoundsException("Index is out of bounds!");
    }
+   if (index == 0) return start;
+   if (index == size - 1) return end;
    Node current = start;
-   for(int i = 0; i <= index; i++){
+   for(int i = 0; i < index; i++){
      current = current.getNext();
    }
    return current;
@@ -72,17 +85,16 @@ public class MyLinkedList{
   return prev;
 }
  public String toString(){
-   String output = "";
-	 if (start != null) {
-		Node current = start.getNext();
-		while (current != null) {
-		    output += current.getData().toString();
-        if(current.getNext() != null){
-          output += ", ";
-        }
-				current = current.getNext();
-		}
-	}
+  String output = "";
+  if(size()==0){
+    return "[]";
+  }
+  Node current = start;
+  while(current.getNext() != null){
+    output += current.getData() + ", ";
+    current = current.getNext();
+  }
+  output += current.getData();
   return "[" + output + "]";
  }; //shouldn't use get()- run time would be O(N^2)
  //Any helper method that returns a Node object MUST BE PRIVATE!
@@ -99,10 +111,15 @@ public class MyLinkedList{
  public String toStringReversed(){
    //start from end, getPrev instead of getNext
    String output = "";
-   int i = 1;
-	 Node current = move(size()-i);
-   output += current.getPrev().getData().toString();
-
-   return "[" + output  + "]";
+   if(size()==0){
+     return "[]";
+   }
+   Node current = end;
+   while(current.getPrev() != null){
+     output += current.getData() + ", ";
+     current = current.getPrev();
+   }
+   output += current.getData();
+   return "[" + output + "]";
  }
 }
