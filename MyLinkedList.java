@@ -133,6 +133,12 @@ public class MyLinkedList{
  }
  public void extend(MyLinkedList other){
    //NO Loops, should be
+   end.setNext(other.start);
+   other.start.setPrev(end);
+   size += other.size();
+   other.size = 0;
+   other.start = null;
+   other.end = null;
  }
  public String toStringReversed(){
    //start from end, getPrev instead of getNext
