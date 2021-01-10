@@ -45,14 +45,14 @@ public class MyLinkedList{
         } else {
             Node newPrev = move(index - 1);
             Node newNext = move(index);
-            temp.setPrev(newPrev);
             temp.setNext(newNext);
             newPrev.setNext(temp);
             newNext.setPrev(temp);
+            temp.setPrev(newPrev);
         }
 
         size ++;
-    }
+  }
 
  private Node move(int index){
    if(index < 0 || index >= size()){
@@ -103,7 +103,33 @@ public class MyLinkedList{
    if(index < 0 || index >= size()){
      throw new IndexOutOfBoundsException("Index is out of bounds!");
    }
-   return "a";
+   String oldValue = "";
+   if(size() == 1){
+     oldValue = start.getData();
+     start = null;
+     end = null;
+   }else if(index == 0){
+     oldValue = start.getData();
+     Node head = start.getNext();
+     head.setPrev(null);
+     start.setNext(null);
+     start = head;
+   }else if(index == size() -1){
+     oldValue = end.getData();
+     Node old = end.getPrev();
+     old.setNext(null);
+     end.setPrev(null);
+     end = old;
+   }else{
+     Node old = move(index);
+     oldValue = old.getData();
+     old.getPrev().setNext(old.getNext());//set the previous one's next to the old node's next
+     old.getNext().setPrev(old.getPrev());//set the next one's previous to the old node's previous
+     old.setNext(null);
+     old.setPrev(null);
+   }
+   size--;
+   return oldValue;
  }
  public void extend(MyLinkedList other){
    //NO Loops, should be
