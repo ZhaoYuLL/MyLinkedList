@@ -112,7 +112,7 @@ public class MyLinkedList{
      oldValue = start.getData();
      Node head = start.getNext();
      head.setPrev(null);
-     start.setNext(null);
+     start.setNext(null);//does this break the linked list? only needed if it does?
      start = head;
    }else if(index == size() -1){
      oldValue = end.getData();
@@ -136,6 +136,7 @@ public class MyLinkedList{
    end.setNext(other.start);
    other.start.setPrev(end);
    size += other.size();
+   this.end = other.end;
    other.size = 0;
    other.start = null;
    other.end = null;
